@@ -88,6 +88,28 @@ python trading_api.py --action get_quote --symbols "00700.HK,00388.HK"
 }
 ```
 
+### get_stock_kline
+
+查询指定股票的 K 线走势数据（基于行情缓存，可绘日K/分钟K）。
+
+**参数**:
+| 参数名 | 类型 | 必填 | 说明 |
+|--------|------|------|------|
+| stock_code | string | 是 | 股票代码，如 00700.HK |
+| period | string | 否 | 周期：1d=日K，1m=分钟K，默认 1d |
+| limit | integer | 否 | 返回K线根数，日K默认 60，分钟K默认 120，最大 500 |
+
+**调用示例**:
+```bash
+# 日K线
+python trading_api.py --action kline --stock-code 00700.HK --period 1d --limit 60
+
+# 分钟K线
+python trading_api.py --action kline --stock-code 00700.HK --period 1m --limit 120
+```
+
+**返回说明**: `data` 内为服务端原始响应，其中 `data.kline` 为 K 线数组，每项含 `date`（日K）或 `time`（分钟K）、`open`、`high`、`low`、`close`。
+
 ### get_market_status
 
 获取市场状态：交易时间、数据更新时间、服务可用性。

@@ -134,6 +134,21 @@ def get_market_status():
     return call_mcp_tool("get_market_status")
 
 
+def get_stock_kline(stock_code: str, period: str = "1d", limit: int = 60):
+    """
+    查询指定股票的K线走势数据（日K或分钟K）
+
+    Args:
+        stock_code: 股票代码，如 00700.HK
+        period: 周期，1d=日K，1m=分钟K，默认 1d
+        limit: 返回K线根数，日K默认60，分钟K默认120，最大500
+    """
+    return call_mcp_tool(
+        "get_stock_kline",
+        {"stock_code": stock_code, "period": period, "limit": min(limit, 500)},
+    )
+
+
 # ==================== 账户查询 ====================
 
 def get_account_snapshot():
@@ -226,6 +241,7 @@ def main():
   python trading_api.py --action list_stocks
   python trading_api.py --action get_quote --symbols "00700.HK,00388.HK"
   python trading_api.py --action market_status
+  python trading_api.py --action kline --stock-code 00700.HK --period 1d --limit 60
 
   # 账户查询
   python trading_api.py --action account
@@ -254,7 +270,7 @@ def main():
         required=True,
         choices=[
             # 行情
-            "list_stocks", "get_quote", "market_status",
+            "list_stocks", "get_quote", "market_status", "kline",
             # 账户
             "account", "positions", "holdings",
             # 交易
@@ -273,6 +289,7 @@ def main():
     parser.add_argument("--quantity", type=int, help="交易数量")
     parser.add_argument("--page", type=int, default=1, help="页码")
     parser.add_argument("--limit", type=int, default=50, help="返回条数")
+    parser.add_argument("--period", default="1d", choices=["1d", "1m"], help="K线周期：1d=日K，1m=分钟K")
     
     args = parser.parse_args()
     
@@ -288,6 +305,12 @@ def main():
             result = get_quote_by_symbols(args.symbols)
     elif args.action == "market_status":
         result = get_market_status()
+    elif args.action == "kline":
+        if not args.stock_code:
+            result = {"success": False, "error": "缺少 --stock-code 参数"}
+        else:
+            limit = args.limit if args.limit != 50 else (120 if args.period == "1m" else 60)
+            result = get_stock_kline(args.stock_code, args.period, limit)
     elif args.action == "account":
         result = get_account_snapshot()
     elif args.action == "positions":
