@@ -1,5 +1,5 @@
 ---
-name: hk-stock-trading-mcp
+name: hk-stock-trading
 description: 港股模拟炒股大赛交易助手，支持行情查询、K线走势、账户管理、买卖交易和历史记录查询；当用户需要查看港股行情、查看K线、管理模拟账户、执行买卖操作或查询交易记录时使用
 ---
 
