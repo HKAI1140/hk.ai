@@ -107,7 +107,8 @@ requests>=2.28.0
 **配置文件结构**:
 ```json
 {
-  "token": "<具体token值>",
+  "token": "<具体token值>"
+}
 ```
 
 ## 使用示例
