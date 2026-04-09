@@ -23,7 +23,7 @@ except ImportError:
 SKILL_ID = "7612169344646119458"
 
 # MCP 服务基础端点
-MCP_BASE_URL = "https://www.mcp.zjk.site/mcp/http"
+MCP_BASE_URL = "https://www.hk.ai/mcp/http"
 
 # 请求 ID 计数器
 _request_id = 0

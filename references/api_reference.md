@@ -16,7 +16,7 @@
 
 本文档描述港股模拟炒股大赛 MCP 服务的所有 API 接口。
 
-**服务端点**: `https://www.mcp.zjk.site/mcp/http`
+**服务端点**: `https://www.hk.ai/mcp/http`
 
 **调用方式**: JSON-RPC 2.0 over HTTP POST
 
